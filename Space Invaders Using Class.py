@@ -37,13 +37,23 @@ def all_bull():
         y_rect.x = y_rect.x + 10
         if y_rect.colliderect(r_rocket.rect):
             rpoints = rpoints - 1
+            if rpoints == 0:
+                return True
             ybull.remove(y_rect)
     for r_rect in rbull:
         pygame.draw.rect(screen, "red", r_rect)
         r_rect.x = r_rect.x - 10
         if r_rect.colliderect(y_rocket.rect):
             ypoints = ypoints - 1
+            if ypoints == 0:
+                return True
             rbull.remove(r_rect)
+
+while run:
+    screen.blit(space, (0, 0))
+    pygame.draw.line(screen, "black", (450, 0), (450, 600), 5)
+    rocket_group.draw(screen)
+    all_bull()
     if ypoints <= 0:
         font3 = pygame.font.SysFont("Comic Sans MC", 100)
         message3 = font3.render(("Red Wins!"), True, "white")
@@ -58,14 +68,6 @@ def all_bull():
         pygame.display.update()
         pygame.time.delay(2000)
         run = False
-
-        
-
-while run:
-    screen.blit(space, (0, 0))
-    pygame.draw.line(screen, "black", (450, 0), (450, 600), 5)
-    rocket_group.draw(screen)
-    all_bull()
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LSHIFT:
